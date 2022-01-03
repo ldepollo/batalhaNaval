@@ -26,7 +26,7 @@ public class JogoMain {
     }
 
     Jogador jogador = new Jogador(opcaoDePreenchimentoDoTabuleiro, tamanhoTabuleiro);
-    Jogador computador = new Jogador(2,10);
+    Jogador computador = new Jogador(2,tamanhoTabuleiro);
 
     jogador.imprimirTabuleiro();
 
