@@ -121,13 +121,14 @@ public class Jogador {
         String posicao;
         int posicaoLinha, posicaoColuna;
 
-        System.out.println("Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)");
-        posicao = input.nextLine();
-
-        posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-        posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-
         do {
+            System.out.println("Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)");
+            posicao = input.nextLine();
+
+            posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
+            posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
+
+
             if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna)) {
                 if (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
                         tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
