@@ -10,6 +10,7 @@ public class JogoMain {
     Scanner input = new Scanner(System.in);
     int tamanhoTabuleiro = 0;
     int opcaoDePreenchimentoDoTabuleiro = 0;
+    boolean jogoEmAndamento;
 
     System.out.println("Iniciando o jogo de Batalha Naval!");
 
@@ -28,7 +29,26 @@ public class JogoMain {
     Jogador jogador = new Jogador(opcaoDePreenchimentoDoTabuleiro, tamanhoTabuleiro);
     Jogador computador = new Jogador(2,tamanhoTabuleiro);
 
-    jogador.imprimirTabuleiro();
+    jogoEmAndamento = true;
 
+    while(jogoEmAndamento) {
+      jogador.imprimirTabuleiro();
+      System.out.println("Placar: Jogador = " + jogador.getPlacar() + " | Computador = " + computador.getPlacar());
+      jogador.realizarJogada(computador);
+      if (jogador.getPlacar() == tamanhoTabuleiro || computador.getPlacar() == tamanhoTabuleiro) {
+        jogoEmAndamento = false;
+        jogador.imprimirTabuleiro();
+        computador.imprimirTabuleiro();
+      }
+
+      computador.realizarJogadaRandomica(jogador);
+      if (jogador.getPlacar() == tamanhoTabuleiro || computador.getPlacar() == tamanhoTabuleiro) {
+        jogoEmAndamento = false;
+        jogador.imprimirTabuleiro();
+        computador.imprimirTabuleiro();
+      }
+    }
+
+    input.close();
   }
 }
