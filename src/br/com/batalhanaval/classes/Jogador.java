@@ -71,11 +71,11 @@ public class Jogador {
 
         imprimirTabuleiro();
 
-        System.out.println("Informe as posições no formato Letra e Número (Exemplo: B3)");
+        System.out.println("\u001B[34m" + "Informe as posições no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
 
         for (int i = 0; i < tamanho; i++) {
             do {
-                System.out.println("Digite a " + (i + 1) + "ª posição:");
+                System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
                 posicao = input.nextLine();
 
                 posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
@@ -83,8 +83,8 @@ public class Jogador {
 
                 if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna)) {
                     if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
-                        System.out.println("Essa posição já está preenchida!");
-                        System.out.println("Digite a " + (i + 1) + "ª posição:");
+                        System.out.println("\u001B[31m" + "Essa posição já está preenchida!" + "\u001B[0m");
+                        System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
                         posicao = input.nextLine();
 
                         posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
@@ -117,12 +117,12 @@ public class Jogador {
         }
     }
 
-    public void realizarJogada(Jogador inimigo) {
+    public void realizarJogada(Jogador inimigo, int validaTamanhoTabuleiro) {
         String posicao;
         int posicaoLinha, posicaoColuna;
 
         do {
-            System.out.println("Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)");
+            System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
             posicao = input.nextLine();
 
             posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
