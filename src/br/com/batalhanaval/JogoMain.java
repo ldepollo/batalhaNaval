@@ -17,14 +17,41 @@ public class JogoMain {
     while (tamanhoTabuleiro<5 || tamanhoTabuleiro>10) {
       System.out.println("Preencha o nível de dificuldade de 5 a 10:");
       System.out.println("(Dificuldade representa tamanho do tabuleiro e # de submarinos)");
-      tamanhoTabuleiro = Integer.parseInt(input.nextLine());
+
+      if (input.hasNextInt()) {
+        tamanhoTabuleiro = Integer.parseInt(input.nextLine());
+
+        if(tamanhoTabuleiro<5 || tamanhoTabuleiro>10) {
+            System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+            input = new Scanner(System.in);
+        }
+
+      }else{
+        System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+        input = new Scanner(System.in);
+      }
     }
 
     while (opcaoDePreenchimentoDoTabuleiro != 1 && opcaoDePreenchimentoDoTabuleiro != 2) {
       System.out.println("Preenchendo o tabuleiro do jogador:");
       System.out.println("Digite 1 para preencher manualmente ou 2 para preencher automaticamente.");
-      opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(input.nextLine());
+      //opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(input.nextLine());
+
+
+      if (input.hasNextInt()) {
+        opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(input.nextLine());
+
+        if(opcaoDePreenchimentoDoTabuleiro != 1 && opcaoDePreenchimentoDoTabuleiro != 2) {
+          System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+          input = new Scanner(System.in);
+        }
+
+      }else{
+        System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+        input = new Scanner(System.in);
+      }
     }
+
 
     Jogador jogador = new Jogador(opcaoDePreenchimentoDoTabuleiro, tamanhoTabuleiro);
     Jogador computador = new Jogador(2,tamanhoTabuleiro);
