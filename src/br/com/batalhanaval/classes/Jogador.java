@@ -75,21 +75,37 @@ public class Jogador {
 
         for (int i = 0; i < tamanho; i++) {
             do {
-                System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
-                posicao = input.nextLine();
+//                System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
+//                posicao = input.nextLine();
+
+                do{
+                    System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
+                    posicao = input.nextLine();
+                }while(!Utilidade.validarInputs(posicao));
 
                 posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                 posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
 
                 if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
-                    if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
-                        System.out.println("\u001B[31m" + "Essa posição já está preenchida!" + "\u001B[0m");
-                        System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
-                        posicao = input.nextLine();
 
-                        posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                        posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-                    }
+                    boolean validaPosicaoRepetida=true;
+
+                    do {
+                        if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
+                            System.out.println("\u001B[31m" + "Essa posição já está preenchida!" + "\u001B[0m");
+                            do {
+                                System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
+                                posicao = input.nextLine();
+                            } while (!Utilidade.validarInputs(posicao));
+
+                            posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
+                            posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
+                        }else{
+                            validaPosicaoRepetida=false;
+                        }
+                    }while(validaPosicaoRepetida);
+
+
                 }
             } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
             tabuleiro[posicaoLinha][posicaoColuna] = "N";
@@ -126,7 +142,7 @@ public class Jogador {
             do{
                 System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                 posicao = input.nextLine();
-            }while(!Utilidade.validarInputJogadas(posicao));
+            }while(!Utilidade.validarInputs(posicao));
 
             posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
             posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
@@ -146,7 +162,7 @@ public class Jogador {
                         do {
                             System.out.println("\u001B[36m" + "Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                             posicao = input.nextLine();
-                        } while (!Utilidade.validarInputJogadas(posicao));
+                        } while (!Utilidade.validarInputs(posicao));
 
                         posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                         posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
