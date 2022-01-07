@@ -42,37 +42,39 @@ public class JogoMain {
       System.out.println("\u001B[36m" + "Preencha o nível de dificuldade de 5 a 10:" + "\u001B[0m");
       System.out.println("(Dificuldade representa tamanho do tabuleiro e # de submarinos)");
 
-      if (input.hasNextInt()) {
-        tamanhoTabuleiro = Integer.parseInt(input.nextLine());
+      String dadosInput = input.nextLine();
 
-        if(tamanhoTabuleiro<5 || tamanhoTabuleiro>10) {
-            System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
-            input = new Scanner(System.in);
-        }
-
-      }else{
+      if(
+              dadosInput.matches(".*[a-z].*") ||
+              dadosInput.matches(".*[A-Z].*") ||
+              dadosInput.equals("")
+      ){
         System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
-        input = new Scanner(System.in);
+      }else{
+          tamanhoTabuleiro = Integer.parseInt(dadosInput);
+          if(tamanhoTabuleiro<5 || tamanhoTabuleiro>10) {
+              System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+          }
       }
     }
 
     while (opcaoDePreenchimentoDoTabuleiro != 1 && opcaoDePreenchimentoDoTabuleiro != 2) {
       System.out.println("\u001B[34m" + "Preenchendo o tabuleiro do jogador:" + "\u001B[0m");
       System.out.println("\u001B[36m" + "Digite 1 para preencher manualmente ou 2 para preencher automaticamente." + "\u001B[0m");
-      //opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(input.nextLine());
 
+      String dadosInput = input.nextLine();
 
-      if (input.hasNextInt()) {
-        opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(input.nextLine());
-
+      if(
+              dadosInput.matches(".*[a-z].*") ||
+              dadosInput.matches(".*[A-Z].*") ||
+              dadosInput.equals("")
+      ){
+        System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
+      }else{
+        opcaoDePreenchimentoDoTabuleiro = Integer.parseInt(dadosInput);
         if(opcaoDePreenchimentoDoTabuleiro != 1 && opcaoDePreenchimentoDoTabuleiro != 2) {
           System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
-          input = new Scanner(System.in);
         }
-
-      }else{
-        System.out.println("\u001B[31m" + "(Valor digitado inválido.)" + "\u001B[0m");
-        input = new Scanner(System.in);
       }
     }
 

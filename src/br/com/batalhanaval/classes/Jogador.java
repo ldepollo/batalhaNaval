@@ -81,7 +81,7 @@ public class Jogador {
                 posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                 posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
 
-                if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna)) {
+                if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
                     if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
                         System.out.println("\u001B[31m" + "Essa posição já está preenchida!" + "\u001B[0m");
                         System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
@@ -91,7 +91,7 @@ public class Jogador {
                         posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
                     }
                 }
-            } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna));
+            } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
             tabuleiro[posicaoLinha][posicaoColuna] = "N";
         }
 
@@ -129,7 +129,7 @@ public class Jogador {
             posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
 
 
-            if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna)) {
+            if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
                 if (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
                         tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
                         tabuleiro[posicaoLinha][posicaoColuna].equals("X") ||
@@ -142,7 +142,7 @@ public class Jogador {
                     posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
                 }
             }
-        } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna));
+        } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
 
         String casaInimigo = inimigo.getCasaTabuleiro(posicaoLinha, posicaoColuna);
         String casaJogador = getCasaTabuleiro(posicaoLinha, posicaoColuna);
