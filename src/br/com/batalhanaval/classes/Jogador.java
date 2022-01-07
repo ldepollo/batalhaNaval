@@ -122,34 +122,39 @@ public class Jogador {
         int posicaoLinha, posicaoColuna;
 
         do {
-            System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
-            posicao = input.nextLine();
 
-            //colocar a condição se a posição for vazia, setar uma posição de valor invalido em posicaoLinha e posicaoColuna
-            if(posicao.equals("")){
-                posicaoLinha = 10; //10 para forçar um valor invalido e retornar ao laço.
-                posicaoColuna = 10;
-            }else{
-                posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-            }
+            do{
+                System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
+                posicao = input.nextLine();
+            }while(!Utilidade.validarInputJogadas(posicao));
 
-                if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
+            posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
+            posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
 
-                        if (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
-                                tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
-                                tabuleiro[posicaoLinha][posicaoColuna].equals("X") ||
-                                tabuleiro[posicaoLinha][posicaoColuna].equals("n")) {
+            if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
 
-                            System.out.println("Você já atacou nessa casa! Digite uma nova casa");
+                boolean validaCasaRepetida = true;
+
+                do {
+                    if (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
+                            tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
+                            tabuleiro[posicaoLinha][posicaoColuna].equals("X") ||
+                            tabuleiro[posicaoLinha][posicaoColuna].equals("n")) {
+
+                        System.out.println("Você já atacou nessa casa!");
+
+                        do {
+                            System.out.println("\u001B[36m" + "Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                             posicao = input.nextLine();
+                        } while (!Utilidade.validarInputJogadas(posicao));
 
-
-                                posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                                posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-                            }
-
-                }
+                        posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
+                        posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
+                    }else{
+                        validaCasaRepetida=false;
+                    }
+                }while(validaCasaRepetida);
+            }
         } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
 
         String casaInimigo = inimigo.getCasaTabuleiro(posicaoLinha, posicaoColuna);

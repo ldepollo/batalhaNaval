@@ -82,5 +82,15 @@ public final class Utilidade {
             return true;
         }
     }
+
+    public static boolean validarInputJogadas(String posicao){
+        if (posicao.equals("")) {
+            System.out.println("\u001B[31m" + "Posição inválida! Favor entrar no formato Letra e Número (Ex: B3)" + "\u001B[0m");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     
 }
