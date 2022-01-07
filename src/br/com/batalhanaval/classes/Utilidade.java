@@ -66,21 +66,29 @@ public final class Utilidade {
         }
     }
 
-    public static boolean validarEntrada(int posicaoLinha, int posicaoColuna) {
-        if (posicaoLinha == 10 || posicaoColuna == 10) {
-            System.out.println("Posição inválida! Favor entrar no formato Letra e Número (Ex: B3)");
+    public static boolean validarEntrada(int posicaoLinha, int posicaoColuna, int tamanhoTabuleiroJogo) {
+        if (posicaoLinha == 10 || posicaoColuna == 10 || posicaoLinha >= tamanhoTabuleiroJogo || posicaoColuna >= tamanhoTabuleiroJogo) {
+            System.out.println("\u001B[31m" + "Posição inválida! Favor entrar no formato Letra e Número (Ex: B3)" + "\u001B[0m");
             return false;
         } else {
             return true;
         }
     }
 
-    public static boolean validarEntradaSemMensagem(int posicaoLinha, int posicaoColuna) {
-        if (posicaoLinha == 10 || posicaoColuna == 10) {
+    public static boolean validarEntradaSemMensagem(int posicaoLinha, int posicaoColuna, int tamanhoTabuleiroJogo) {
+        if (posicaoLinha == 10 || posicaoColuna == 10 || posicaoLinha >= tamanhoTabuleiroJogo || posicaoColuna >= tamanhoTabuleiroJogo) {
             return false;
         } else {
             return true;
         }
     }
-    
+
+    public static boolean validarInputs(String posicao, String regex){
+        if (!posicao.matches("(?i)^[a-z][0-9]$")) {
+            System.out.println("\u001B[31m" + "Valor inválido! Favor entrar no formato Letra e Número (Ex: B3)" + "\u001B[0m");
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
