@@ -3,24 +3,25 @@ package br.com.batalhanaval.classes;
 import java.util.Scanner;
 
 public class Jogador {
-    String[][] tabuleiro = new String[10][10];
+    String[][] tabuleiro;
     String[] barraTopoTabuleiro = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     String[] barraLateralTabuleiro = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
     Scanner input = new Scanner(System.in);
-    private int tamanhoTabuleiroJogo;
+    private final int tamanhoTabuleiroJogo;
     private int placar = 0;
     String regex;
 
     public Jogador(int opcaoDePreenchimento, int tamanhoTabuleiro) {
-        tamanhoTabuleiroJogo = tamanhoTabuleiro;
+        this.tamanhoTabuleiroJogo = tamanhoTabuleiro;
+        this.tabuleiro = new String[this.tamanhoTabuleiroJogo][this.tamanhoTabuleiroJogo];
+        inicializarTabuleiro(this.tamanhoTabuleiroJogo);
 
-        inicializarTabuleiro(tamanhoTabuleiroJogo);
-        String regex = "/^[a-" + barraLateralTabuleiro[(tamanhoTabuleiro-1)] + "][0-" + (tamanhoTabuleiro-1) + "]$/i";
+        this.regex = "(?i)^[A-" + this.barraLateralTabuleiro[(this.tamanhoTabuleiroJogo - 1)] + "][0-" + (this.tamanhoTabuleiroJogo - 1) + "]$";
 
         if (opcaoDePreenchimento == 1) {
-            preencherTabuleiroNaMao(tamanhoTabuleiroJogo);
+            preencherTabuleiroNaMao();
         } else {
-            preencherTabuleiroRandomicamente(tamanhoTabuleiroJogo);
+            preencherTabuleiroRandomicamente();
         }
     }
 
@@ -66,60 +67,46 @@ public class Jogador {
         }
     }
 
-    private void preencherTabuleiroNaMao(int tamanho) {
+    private void preencherTabuleiroNaMao() {
         String posicao;
-        int posicaoLinha, posicaoColuna;
+        int posicaoLinha;
+        int posicaoColuna;
 
         imprimirTabuleiro();
 
         System.out.println("\u001B[34m" + "Informe as posições no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
 
-        for (int i = 0; i < tamanho; i++) {
+
+        for (int i = 0; i < tamanhoTabuleiroJogo; i++) {
             do {
-                do{
+                do {
+
                     System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
                     posicao = input.nextLine();
-                }while(!Utilidade.validarInputs(posicao, regex));
+
+                } while (Utilidade.validarInputs(posicao, regex));
 
                 posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
+                posicaoColuna = Integer.parseInt(posicao.substring(1));
 
-                if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
+            } while (!Utilidade.validarEntradaRepetida(tabuleiro[posicaoLinha][posicaoColuna]));
 
-                    boolean validaPosicaoRepetida=true;
-
-                    do {
-                        if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
-                            System.out.println("\u001B[31m" + "Essa posição já está preenchida!" + "\u001B[0m");
-                            do {
-                                System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
-                                posicao = input.nextLine();
-                            } while (!Utilidade.validarInputs(posicao, regex));
-
-                            posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                            posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-
-                        }else{
-                            validaPosicaoRepetida=false;
-                        }
-                    }while(validaPosicaoRepetida);
-                }
-            } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
             tabuleiro[posicaoLinha][posicaoColuna] = "N";
         }
     }
 
-    private void preencherTabuleiroRandomicamente(int tamanho) {
-        int posicaoLinha, posicaoColuna;
+    private void preencherTabuleiroRandomicamente() {
+        int posicaoLinha;
+        int posicaoColuna;
 
-        for (int i = 0; i < tamanho; i++) {
-            posicaoLinha = (int) (Math.random() * tamanho);
-            posicaoColuna = (int) (Math.random() * tamanho);
+        for (int i = 0; i < tamanhoTabuleiroJogo; i++) {
+            posicaoLinha = (int) (Math.random() * tamanhoTabuleiroJogo);
+            posicaoColuna = (int) (Math.random() * tamanhoTabuleiroJogo);
 
             if (tabuleiro[posicaoLinha][posicaoColuna].equals("N")) {
                 do {
-                    posicaoLinha = (int) (Math.random() * tamanho);
-                    posicaoColuna = (int) (Math.random() * tamanho);
+                    posicaoLinha = (int) (Math.random() * tamanhoTabuleiroJogo);
+                    posicaoColuna = (int) (Math.random() * tamanhoTabuleiroJogo);
                 } while (tabuleiro[posicaoLinha][posicaoColuna].equals("N"));
                 tabuleiro[posicaoLinha][posicaoColuna] = "N";
             } else {
@@ -128,163 +115,114 @@ public class Jogador {
         }
     }
 
-    public void realizarJogada(Jogador inimigo, int validaTamanhoTabuleiro) {
+    public void realizarJogada(Jogador inimigo) {
         String posicao;
-        int posicaoLinha, posicaoColuna;
+        int posicaoLinha;
+        int posicaoColuna;
 
         do {
+            do {
 
-            do{
                 System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                 posicao = input.nextLine();
-            }while(!Utilidade.validarInputs(posicao, regex));
+
+            } while (Utilidade.validarInputs(posicao, regex));
 
             posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-            posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
+            posicaoColuna = Integer.parseInt(posicao.substring(1));
 
-            if (Utilidade.validarEntradaSemMensagem(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo)) {
+        } while (Utilidade.validarAtaqueRepetido(tabuleiro[posicaoLinha][posicaoColuna], "\u001B[31m" + "Você já atacou nessa casa!" + "\u001B[0m"));
 
-                boolean validaCasaRepetida = true;
-
-                do {
-                    if (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
-                            tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
-                            tabuleiro[posicaoLinha][posicaoColuna].equals("X") ||
-                            tabuleiro[posicaoLinha][posicaoColuna].equals("n")) {
-
-                        System.out.println("Você já atacou nessa casa!");
-
-                        do {
-                            System.out.println("\u001B[36m" + "Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
-                            posicao = input.nextLine();
-                        } while (!Utilidade.validarInputs(posicao, regex));
-
-                        posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
-                        posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
-                    }else{
-                        validaCasaRepetida=false;
-                    }
-                }while(validaCasaRepetida);
-            }
-        } while (!Utilidade.validarEntrada(posicaoLinha, posicaoColuna, tamanhoTabuleiroJogo));
-
-        String casaInimigo = inimigo.getCasaTabuleiro(posicaoLinha, posicaoColuna);
-        String casaJogador = getCasaTabuleiro(posicaoLinha, posicaoColuna);
-
-        if (casaInimigo.equals("N")) {
-            System.out.println("Você acertou um navio inimigo!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, " ");
-            placar = placar + 1;
-
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
-
-        if (casaInimigo.equals("n")) {
-            System.out.println("Você acertou um navio inimigo!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
-            placar = placar + 1;
-
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
-
-        if (casaInimigo.equals("X")) {
-            System.out.println("Você acertou um navio inimigo!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            placar = placar + 1;
-
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
-
-        if (casaInimigo.equals(" ") ||
-                casaInimigo.equals("-") ||
-                casaInimigo.equals("*")) {
-            System.out.println("Você errou o tiro!");
-
-            if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
-            } else if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "n");
-            }
-        }
+        this.resultadoAtaque(inimigo, posicaoLinha, posicaoColuna,
+                "Você acertou um navio inimigo!", "Você errou o tiro!");
     }
 
     public void realizarJogadaRandomica(Jogador inimigo) {
-        int posicaoLinha, posicaoColuna;
+        int posicaoLinha;
+        int posicaoColuna;
 
-        posicaoLinha = (int) (Math.random() * tamanhoTabuleiroJogo);
-        posicaoColuna = (int) (Math.random() * tamanhoTabuleiroJogo);
-
-        while (tabuleiro[posicaoLinha][posicaoColuna].equals("*") ||
-                tabuleiro[posicaoLinha][posicaoColuna].equals("-") ||
-                tabuleiro[posicaoLinha][posicaoColuna].equals("X") ||
-                tabuleiro[posicaoLinha][posicaoColuna].equals("n")) {
+        do {
             posicaoLinha = (int) (Math.random() * tamanhoTabuleiroJogo);
             posicaoColuna = (int) (Math.random() * tamanhoTabuleiroJogo);
         }
+        while (Utilidade.validarAtaqueRepetido(tabuleiro[posicaoLinha][posicaoColuna], ""));
 
         System.out.println("Jogada do computador: " + barraLateralTabuleiro[posicaoLinha] + posicaoColuna);
 
+        this.resultadoAtaque(inimigo, posicaoLinha, posicaoColuna,
+                "O Computador acertou seu navio!", "O computador errou o tiro!");
+    }
+
+    public void resultadoAtaque (Jogador inimigo,
+                                int posicaoLinha, int posicaoColuna,
+                                String mensagemAcerto, String mensagemErro) {
+
         String casaInimigo = inimigo.getCasaTabuleiro(posicaoLinha, posicaoColuna);
-        String casaJogador = getCasaTabuleiro(posicaoLinha, posicaoColuna);
+        String casaJogador = this.getCasaTabuleiro(posicaoLinha, posicaoColuna);
 
-        if (casaInimigo.equals("N")) {
-            System.out.println("O Computador acertou seu navio!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, " ");
-            placar = placar + 1;
+        switch (casaInimigo) {
 
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
+            case "N":
+                if (!mensagemAcerto.equals("")) {
+                    System.out.println(mensagemAcerto);
+                }
 
-        if (casaInimigo.equals("n")) {
-            System.out.println("O Computador acertou seu navio!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
-            placar = placar + 1;
+                inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, " ");
+                this.setPlacar(this.getPlacar() + 1);
 
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
+                if (casaJogador.equals("N")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
+                } else if (casaJogador.equals(" ")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
+                }
+                break;
 
-        if (casaInimigo.equals("X")) {
-            System.out.println("O Computador acertou seu navio!");
-            inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            placar = placar + 1;
+            case "n":
+                if (!mensagemAcerto.equals("")) {
+                    System.out.println(mensagemAcerto);
+                }
 
-            if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
-            } else if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
-            }
-        }
+                inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
+                this.setPlacar(this.getPlacar() + 1);
 
-        if (casaInimigo.equals(" ") ||
-                casaInimigo.equals("-") ||
-                casaInimigo.equals("*")) {
-            System.out.println("O computador errou o tiro!");
+                if (casaJogador.equals("N")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
+                } else if (casaJogador.equals(" ")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
+                }
+                break;
 
-            if (casaJogador.equals(" ")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
-            } else if (casaJogador.equals("N")) {
-                setCasaTabuleiro(posicaoLinha, posicaoColuna, "n");
-            }
+            case "X":
+                if (!mensagemAcerto.equals("")) {
+                    System.out.println(mensagemAcerto);
+                }
+
+                inimigo.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
+                this.setPlacar(this.getPlacar() + 1);
+
+                if (casaJogador.equals("N")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "X");
+                } else if (casaJogador.equals(" ")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "*");
+                }
+                break;
+
+            case " ":
+            case "-":
+            case "*":
+                if (!mensagemAcerto.equals("")) {
+                    System.out.println(mensagemErro);
+                }
+
+                if (casaJogador.equals(" ")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "-");
+                } else if (casaJogador.equals("N")) {
+                    this.setCasaTabuleiro(posicaoLinha, posicaoColuna, "n");
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }
