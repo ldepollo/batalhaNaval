@@ -9,13 +9,14 @@ public class Jogador {
     Scanner input = new Scanner(System.in);
     private int tamanhoTabuleiroJogo;
     private int placar = 0;
-    String regex;
+    String nomeJogador;
 
-    public Jogador(int opcaoDePreenchimento, int tamanhoTabuleiro) {
+    public Jogador(int opcaoDePreenchimento, int tamanhoTabuleiro,String nome) {
         tamanhoTabuleiroJogo = tamanhoTabuleiro;
+        nomeJogador = nome;
 
         inicializarTabuleiro(tamanhoTabuleiroJogo);
-        String regex = "/^[a-" + barraLateralTabuleiro[(tamanhoTabuleiro-1)] + "][0-" + (tamanhoTabuleiro-1) + "]$/i";
+//        String regex = "/^[a-" + barraLateralTabuleiro[(tamanhoTabuleiro-1)] + "][0-" + (tamanhoTabuleiro-1) + "]$/i";
 
         if (opcaoDePreenchimento == 1) {
             preencherTabuleiroNaMao(tamanhoTabuleiroJogo);
@@ -26,7 +27,7 @@ public class Jogador {
 
     public void imprimirTabuleiro() {
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
-        System.out.println(" ".repeat(2 * tamanhoTabuleiroJogo - 1) + "JOGADOR" + " ".repeat(2 * tamanhoTabuleiroJogo - 1));
+        System.out.println(" ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+3) + nomeJogador + " ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+3));
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
         System.out.printf("|   |");
         for (int i = 0; i < tamanhoTabuleiroJogo; i++) {
@@ -79,7 +80,7 @@ public class Jogador {
                 do{
                     System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
                     posicao = input.nextLine();
-                }while(!Utilidade.validarInputs(posicao, regex));
+                }while(!Utilidade.validarInputs(posicao));
 
                 posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                 posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
@@ -94,7 +95,7 @@ public class Jogador {
                             do {
                                 System.out.println("\u001B[36m" + "Digite a " + (i + 1) + "ª posição:" + "\u001B[0m");
                                 posicao = input.nextLine();
-                            } while (!Utilidade.validarInputs(posicao, regex));
+                            } while (!Utilidade.validarInputs(posicao));
 
                             posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                             posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
@@ -137,7 +138,7 @@ public class Jogador {
             do{
                 System.out.println("\u001B[36m" + "Sua vez! Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                 posicao = input.nextLine();
-            }while(!Utilidade.validarInputs(posicao, regex));
+            }while(!Utilidade.validarInputs(posicao));
 
             posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
             posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));
@@ -157,7 +158,7 @@ public class Jogador {
                         do {
                             System.out.println("\u001B[36m" + "Informe a casa do ataque no formato Letra e Número (Exemplo: B3)" + "\u001B[0m");
                             posicao = input.nextLine();
-                        } while (!Utilidade.validarInputs(posicao, regex));
+                        } while (!Utilidade.validarInputs(posicao));
 
                         posicaoLinha = Utilidade.converterPosicaoLinhaParaInt(posicao.substring(0, 1));
                         posicaoColuna = Utilidade.converterPosicaoColunaParaInt(posicao.substring(1));

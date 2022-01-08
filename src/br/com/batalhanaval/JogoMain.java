@@ -72,8 +72,8 @@ public class JogoMain {
         }
 
 
-        Jogador jogador = new Jogador(opcaoDePreenchimentoDoTabuleiro, tamanhoTabuleiro);
-        Jogador computador = new Jogador(2, tamanhoTabuleiro);
+        Jogador jogador = new Jogador(opcaoDePreenchimentoDoTabuleiro, tamanhoTabuleiro,"COMPUTADOR");
+        Jogador computador = new Jogador(2, tamanhoTabuleiro,"COMPUTADOR");
 
 
         while (true) {
