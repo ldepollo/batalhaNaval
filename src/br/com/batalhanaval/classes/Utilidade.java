@@ -2,6 +2,8 @@ package br.com.batalhanaval.classes;
 
 public final class Utilidade {
 
+    private Utilidade() {}
+
     public static int converterPosicaoLinhaParaInt(String posicaoLinha) {
         switch (posicaoLinha) {
             case "A":
@@ -39,56 +41,37 @@ public final class Utilidade {
         }
     }
 
-    public static int converterPosicaoColunaParaInt(String posicaoColuna) {
-        switch (posicaoColuna) {
-            case "0":
-                return 0;
-            case "1":
-                return 1;
-            case "2":
-                return 2;
-            case "3":
-                return 3;
-            case "4":
-                return 4;
-            case "5":
-                return 5;
-            case "6":
-                return 6;
-            case "7":
-                return 7;
-            case "8":
-                return 8;
-            case "9":
-                return 9;
-            default:
-                return 10;
+    public static boolean validarInputs(String posicao, String regex){
+        if (posicao.matches(regex)) {
+            return false;
+        } else {
+            System.out.println(Cor.VERMELHO.get() + "Valor inválido! Favor entrar no formato Letra e Número (Ex: B3)" + Cor.RESET.get());
+            return true;
         }
     }
 
-    public static boolean validarEntrada(int posicaoLinha, int posicaoColuna, int tamanhoTabuleiroJogo) {
-        if (posicaoLinha == 10 || posicaoColuna == 10 || posicaoLinha >= tamanhoTabuleiroJogo || posicaoColuna >= tamanhoTabuleiroJogo) {
-            System.out.println("\u001B[31m" + "Posição inválida! Favor entrar no formato Letra e Número (Ex: B3)" + "\u001B[0m");
+    public static boolean validarEntradaRepetida(String casaTabuleiro){
+        if (casaTabuleiro.equals(PosicoesTabuleiro.NAVIO_POSICIONADO.getDescricao())) {
+            System.out.println(Cor.VERMELHO.get() + "Essa posição já está preenchida!" + Cor.RESET.get());
             return false;
         } else {
             return true;
         }
     }
 
-    public static boolean validarEntradaSemMensagem(int posicaoLinha, int posicaoColuna, int tamanhoTabuleiroJogo) {
-        if (posicaoLinha == 10 || posicaoColuna == 10 || posicaoLinha >= tamanhoTabuleiroJogo || posicaoColuna >= tamanhoTabuleiroJogo) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    public static boolean validarAtaqueRepetido(String casaTabuleiro, String mensagem){
+        if (casaTabuleiro.equals(PosicoesTabuleiro.TIRO_CERTO.getDescricao()) ||
+                casaTabuleiro.equals(PosicoesTabuleiro.TIRO_AGUA.getDescricao()) ||
+                casaTabuleiro.equals(PosicoesTabuleiro.NAVIO_POSICIONADO_TIRO_CERTO.getDescricao()) ||
+                casaTabuleiro.equals(PosicoesTabuleiro.NAVIO_POSICIONADO_TIRO_AGUA.getDescricao())) {
 
-    public static boolean validarInputs(String posicao){
-        if (!posicao.matches("(?i)^[a-z][0-9]$")) {
-            System.out.println("\u001B[31m" + "Valor inválido! Favor entrar no formato Letra e Número (Ex: B3)" + "\u001B[0m");
-            return false;
-        } else {
+            if (!mensagem.equals("")) {
+                System.out.println(mensagem);
+            }
+
             return true;
+        } else {
+            return false;
         }
     }
 }
