@@ -1,6 +1,4 @@
-![Badge](https://img.shields.io/badge/java%20corretto-11-blue)
-
-![Badge](https://img.shields.io/badge/IDE-IntelliJ-blue)
+<img src="https://img.shields.io/badge/java%20corretto-11-blue"/> <img src="https://img.shields.io/badge/IDE-IntelliJ-blue"/>
 
 
 # Batalha Naval
