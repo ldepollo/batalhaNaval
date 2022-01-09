@@ -22,8 +22,14 @@ public class Partida {
         String dadosInput;
         int tamanho;
 
-        System.out.println(Cor.AZUL.get() + "Iniciando o jogo de Batalha Naval!" + Cor.RESET.get());
-        System.out.println(Cor.CYAN.get() + "Preencha o nível de dificuldade de 5 a 10:" + Cor.RESET.get());
+        System.out.println("");
+        System.out.println(Cor.AZUL.get() + "~".repeat(70) + Cor.RESET.get());
+        System.out.println(Cor.AZUL.get() + " ".repeat(20) + "BATALHA NAVAL LET'S CODE!" + Cor.RESET.get());
+        System.out.println(Cor.AZUL.get() + " ".repeat(8) + "Autores: Lucas Depollo, Lucas Luzini e Rodrigo Lucchesi" + Cor.RESET.get());
+        System.out.println(Cor.AZUL.get() + "~".repeat(70) + Cor.RESET.get());
+        System.out.println("");
+        System.out.println(Cor.AZUL.get() + "Bem-vindo ao melhor jogo de batalha naval escrito em Java!" + Cor.RESET.get());
+        System.out.println(Cor.CYAN.get() + "Para começar, preencha o nível de dificuldade de 5 a 10:" + Cor.RESET.get());
         System.out.println("(Dificuldade representa tamanho do tabuleiro e # de submarinos)");
 
         dadosInput = input.nextLine();
@@ -58,7 +64,7 @@ public class Partida {
     public void iniciarJogo(Jogador jogador, Jogador computador) {
         while (true) {
             jogador.imprimirTabuleiro();
-            System.out.println("Placar: Jogador = " + jogador.getPlacar() + " | Computador = " + computador.getPlacar());
+            System.out.println(Cor.FUNDO_AMARELO.get()+Cor.PRETO.get()+ "Placar: Jogador = " + jogador.getPlacar() + " | Computador = " + computador.getPlacar() + Cor.RESET.get());
             jogador.realizarJogada(computador);
             if (jogador.getPlacar() == tamanhoTabuleiro) {
                 jogador.imprimirTabuleiro();
