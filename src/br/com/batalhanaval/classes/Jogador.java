@@ -30,7 +30,7 @@ public class Jogador {
 
     public void imprimirTabuleiro() {
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
-        System.out.println(" ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+3) + nomeJogador + " ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+3));
+        System.out.println(" ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+2) + nomeJogador + " ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+2));
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
         System.out.printf("|   |");
         for (int i = 0; i < tamanhoTabuleiroJogo; i++) {
