@@ -29,6 +29,7 @@ public class Jogador {
     }
 
     public void imprimirTabuleiro() {
+        System.out.println("");
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
         System.out.println(" ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+2) + nomeJogador + " ".repeat(2 * tamanhoTabuleiroJogo - nomeJogador.length()/2+2));
         System.out.println("-".repeat(4 * tamanhoTabuleiroJogo + 5));
@@ -136,8 +137,9 @@ public class Jogador {
 
         } while (Utilidade.validarAtaqueRepetido(tabuleiro[posicaoLinha][posicaoColuna], Cor.VERMELHO.get() + "Você já atacou nessa casa!" + Cor.RESET.get()));
 
+        System.out.println("");
         this.resultadoAtaque(inimigo, posicaoLinha, posicaoColuna,
-                "Você acertou um navio inimigo!", "Você errou o tiro!");
+                Cor.FUNDO_VERDE.get()+Cor.PRETO.get() + "Você acertou um navio inimigo!" + Cor.RESET.get(), "Você errou o tiro!");
     }
 
     public void realizarJogadaRandomica(Jogador inimigo) {
@@ -153,7 +155,7 @@ public class Jogador {
         System.out.println("Jogada do computador: " + barraLateralTabuleiro[posicaoLinha] + posicaoColuna);
 
         this.resultadoAtaque(inimigo, posicaoLinha, posicaoColuna,
-                "O Computador acertou seu navio!", "O computador errou o tiro!");
+                Cor.FUNDO_VERMELHO.get()+Cor.PRETO.get() + "O Computador acertou seu navio!" + Cor.RESET.get(), "O computador errou o tiro!");
     }
 
     public void resultadoAtaque(Jogador inimigo,
