@@ -22,13 +22,6 @@ public class Partida {
         String dadosInput;
         int tamanho;
 
-        System.out.println("");
-        System.out.println(Cor.AZUL.get() + "~".repeat(70) + Cor.RESET.get());
-        System.out.println(Cor.AZUL.get() + " ".repeat(20) + "BATALHA NAVAL LET'S CODE!" + Cor.RESET.get());
-        System.out.println(Cor.AZUL.get() + " ".repeat(8) + "Autores: Lucas Depollo, Lucas Luzini e Rodrigo Lucchesi" + Cor.RESET.get());
-        System.out.println(Cor.AZUL.get() + "~".repeat(70) + Cor.RESET.get());
-        System.out.println("");
-        System.out.println(Cor.AZUL.get() + "Bem-vindo ao melhor jogo de batalha naval escrito em Java!" + Cor.RESET.get());
         System.out.println(Cor.CYAN.get() + "Para começar, preencha o nível de dificuldade de 5 a 10:" + Cor.RESET.get());
         System.out.println("(Dificuldade representa tamanho do tabuleiro e # de submarinos)");
 
@@ -47,6 +40,7 @@ public class Partida {
         String dadosInput;
         int opcaoPreenchimento = 0;
 
+        System.out.println("");
         System.out.println(Cor.AZUL.get() + "Preenchendo o tabuleiro do jogador:" + Cor.RESET.get());
         System.out.println(Cor.CYAN.get() + "Digite 1 para preencher manualmente ou 2 para preencher automaticamente." + Cor.RESET.get());
 
@@ -69,7 +63,7 @@ public class Partida {
             if (jogador.getPlacar() == tamanhoTabuleiro) {
                 jogador.imprimirTabuleiro();
                 computador.imprimirTabuleiro();
-                System.out.println("O Jogador venceu! Parabéns!");
+                System.out.println(Cor.FUNDO_VERDE.get()+Cor.PRETO.get() + "O Jogador venceu! Parabéns!" + Cor.RESET.get());
                 break;
             }
 
@@ -77,7 +71,7 @@ public class Partida {
             if (computador.getPlacar() == tamanhoTabuleiro) {
                 jogador.imprimirTabuleiro();
                 computador.imprimirTabuleiro();
-                System.out.println("O Computador venceu! Que pena!");
+                System.out.println(Cor.FUNDO_AMARELO.get()+Cor.PRETO.get() + "O Computador venceu! Que pena!" + Cor.RESET.get());
                 break;
             }
         }
