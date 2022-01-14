@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Jogador {
     Scanner input;
-    String[][] tabuleiro;
-    String[] barraTopoTabuleiro = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    String[] barraLateralTabuleiro = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    private String[][] tabuleiro;
+    private final String[] barraTopoTabuleiro = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private final String[] barraLateralTabuleiro = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
     private final int tamanhoTabuleiroJogo;
     private int placar = 0;
-    String nomeJogador;
-    String regex;
+    private String nomeJogador;
+    private String regex;
 
     public Jogador(int opcaoDePreenchimento, int tamanhoTabuleiro, String nome, Scanner input) {
         this.input = input;
@@ -26,6 +26,22 @@ public class Jogador {
         } else {
             preencherTabuleiroRandomicamente();
         }
+    }
+
+    public String getCasaTabuleiro(int x, int y) {
+        return tabuleiro[x][y];
+    }
+
+    public void setCasaTabuleiro(int x, int y, String valor) {
+        tabuleiro[x][y] = valor;
+    }
+
+    public int getPlacar() {
+        return placar;
+    }
+
+    public void setPlacar(int placar) {
+        this.placar = placar;
     }
 
     public void imprimirTabuleiro() {
@@ -45,22 +61,6 @@ public class Jogador {
             }
             System.out.printf("%n");
         }
-    }
-
-    public String getCasaTabuleiro(int x, int y) {
-        return tabuleiro[x][y];
-    }
-
-    public void setCasaTabuleiro(int x, int y, String valor) {
-        tabuleiro[x][y] = valor;
-    }
-
-    public int getPlacar() {
-        return placar;
-    }
-
-    public void setPlacar(int placar) {
-        this.placar = placar;
     }
 
     private void inicializarTabuleiro(int tamanho) {
